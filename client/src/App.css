@@ -439,4 +439,8 @@ table th {
     text-align: center;
     justify-content: center;
   }
+
+  .div-margin {
+    margin: 4px
+  }
 }
