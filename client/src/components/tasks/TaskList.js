@@ -8,8 +8,6 @@ import Table from 'react-bootstrap/Table';
 
 const TaskList = () => {
 
-
-
 const taskContext = useContext(TaskContext);
 const { tasks, getTasks, loading } = taskContext;
 

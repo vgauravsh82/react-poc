@@ -1,7 +1,7 @@
 import {
     GET_TASKS,
     ADD_TASK,
-    DELETE_TASK,
+    RESOLVE_TASK,
   } from '../types';
   
   export default (state, action) => {
@@ -10,21 +10,18 @@ import {
         return {
           ...state,
           tasks: action.payload,
-          loading: false
         };
       case ADD_TASK:
         return {
           ...state,
-          tasks: [action.payload, ...state.contacts],
-          loading: false
+          tasks: [action.payload, ...state.tasks],
         };
-      case DELETE_TASK:
+      case RESOLVE_TASK:
         return {
           ...state,
-          tasks: state.contacts.filter(
-            contact => contact._id !== action.payload
+          contacts: state.tasks.map(task =>
+            task._id === action.payload._id ? action.payload : task
           ),
-          loading: false
         };
       default:
         return state;

@@ -1,7 +1,14 @@
-import React,{Fragment} from 'react';
+import React,{Fragment, useContext} from 'react';
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button';
+import TaskContext from '../../context/task/taskContext';
+
 
 const TaskItem = ({ task }) => {
+
+  
+  const taskContext = useContext(TaskContext);
+  const {resolveTask} = taskContext;
   
   const { _id, description, priority, status } = task;
 
@@ -12,7 +19,10 @@ const TaskItem = ({ task }) => {
       <td>{description}</td>
       <td>{priority}</td>
       <td>{status}</td>
-      <td>Mark Resolved</td>
+      <td>
+        <Button disabled ={status === 'Resolve'} variant='primary' 
+        size='sm' onClick={() => resolveTask(task)}>Mark Resolve</Button>
+      </td>
     </tr>
     </Fragment>
     

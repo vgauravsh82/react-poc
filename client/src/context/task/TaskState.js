@@ -6,7 +6,9 @@ import axios from 'axios';
 
 import {
     GET_TASKS,
-    CONTACT_ERROR,
+    ADD_TASK,
+    TASK_ERROR,
+    RESOLVE_TASK,
   } from '../types';
   
 
@@ -31,17 +33,74 @@ const TaskState = props => {
         });
       } catch (err) {
         dispatch({
-          type: CONTACT_ERROR,
+          type: TASK_ERROR,
           payload: err.response.msg
         });
       }
     };
 
-    return (
+
+    // Add Contact
+  const addTask = async task => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post('/api/tasks', task, config);
+
+      dispatch({
+        type: ADD_TASK,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: TASK_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
+  // Update Contact
+  const resolveTask = async task => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    task.status = 'Resolve';
+    console.log(task);
+
+    try {
+      const res = await axios.put(
+        `/api/tasks/${task._id}`,
+        task,
+        config
+      );
+
+      dispatch({
+        type: RESOLVE_TASK,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: TASK_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
+
+return (
       <TaskContext.Provider
         value={{
           tasks: state.tasks,
-          getTasks
+          getTasks,
+          addTask,
+          resolveTask
         }}
       >
         {props.children}

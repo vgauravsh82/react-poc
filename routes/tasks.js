@@ -65,11 +65,13 @@ router.post(
 router.put('/:id', auth, async (req, res) => {
   const { description, priority,status } = req.body;
 
+  console.log('task update is called');
+  console.log('field again');
   // Build contact object
   const taskFields = {};
-  if (description) taskFields.name = description;
-  if (priority) taskFields.email = priority;
-  if (status) taskFields.phone = status;
+  if (description) taskFields.description = description;
+  if (priority) taskFields.priority = priority;
+  if (status) taskFields.status = status;
   taskFields.updated = Date.now();
   
   try {
